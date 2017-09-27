@@ -1,0 +1,168 @@
+---
+swagger: "2.0"
+info:
+  description: "BeaconFUNプロジェクト「Youbeacomm」のAPIサーバです"
+  version: "1.0.0"
+  title: "Youbeacomm API"
+host: "virtserver.swaggerhub.com"
+basePath: "/shield-9/Youbeacomm/1.0.0"
+tags:
+- name: "device"
+  description: "ユーザの端末"
+- name: "beacon"
+  description: "ビーコンの検知"
+- name: "phrase"
+  description: "フレーズ候補の提案"
+schemes:
+- "https"
+paths:
+  /device:
+    post:
+      tags:
+      - "device"
+      summary: "新しい端末IDを割り当てる"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "新しくシステムに登録する端末の情報"
+        required: true
+        schema:
+          $ref: "#/definitions/DeviceMeta"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/inline_response_200"
+        400:
+          description: "Bad request. Invalid Parameters."
+  /beacon/passed:
+    post:
+      tags:
+      - "beacon"
+      summary: "ビーコン検知の通知"
+      description: ""
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "検知したビーコンの情報"
+        required: true
+        schema:
+          $ref: "#/definitions/body"
+      responses:
+        200:
+          description: "OK"
+        400:
+          description: "Bad Request. Invalid Parameters."
+  /phrase/suggestion/?type=location:
+    get:
+      tags:
+      - "phrase"
+      summary: "位置情報ベースのフレーズ候補の取得"
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "deviceId"
+        in: "query"
+        description: "端末のID"
+        required: true
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Phrases"
+  /phrase/suggestion/?type=frequent:
+    get:
+      tags:
+      - "phrase"
+      summary: "頻出フレーズ候補の取得"
+      description: ""
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Phrases"
+definitions:
+  Beacon:
+    type: "object"
+    required:
+    - "accuracy"
+    - "major"
+    - "minor"
+    - "proximityUUID"
+    properties:
+      proximityUUID:
+        type: "string"
+        format: "uuid"
+        example: "b72fd7cb-3e38-442c-b437-79a0c8ad33c2"
+      major:
+        type: "number"
+      minor:
+        type: "number"
+      accuracy:
+        type: "number"
+        format: "double"
+        example: 10.3
+  DeviceId:
+    type: "string"
+    format: "uuid"
+    description: "システムが自動的に割り当てる端末毎の固有値"
+    example: "7967cad0-317d-4a97-af00-77cd3b964632"
+  DeviceMeta:
+    type: "object"
+    required:
+    - "os_lang"
+    - "os_name"
+    - "os_version"
+    properties:
+      os_name:
+        type: "string"
+        example: "iOS"
+        description: "OSの名前\n\niOSの場合: UIDevice.systemName()の値"
+      os_version:
+        type: "string"
+        example: "8.1"
+        description: "OSのバージョン\n\niOSの場合: UIDevice.systemVersion()の値"
+      os_lang:
+        type: "string"
+        format: "iso639-1"
+        example: "en"
+        description: "OSの言語\n\nISO 639-1で規定されている言語コードの値"
+  Phrases:
+    type: "array"
+    items:
+      $ref: "#/definitions/Phrase"
+  Phrase:
+    type: "object"
+    properties:
+      lang:
+        type: "string"
+        format: "iso639-1"
+        example: "en"
+      string:
+        type: "string"
+        example: "Could you take a photo?"
+  inline_response_200:
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+        description: "システムが自動的に割り当てた値"
+  body:
+    type: "object"
+    properties:
+      device:
+        $ref: "#/definitions/DeviceId"
+      beacon:
+        $ref: "#/definitions/Beacon"
