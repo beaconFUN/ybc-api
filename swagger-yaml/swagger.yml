@@ -2,11 +2,13 @@
 swagger: "2.0"
 info:
   description: "BeaconFUNプロジェクト「Youbeacomm」のAPIサーバです"
-  version: "1.0.0"
+  version: "1.0.0-alpha"
   title: "Youbeacomm API"
 host: "virtserver.swaggerhub.com"
-basePath: "/shield-9/Youbeacomm/1.0.0"
+basePath: "/shield-9/Youbeacomm/1.0.0-alpha"
 tags:
+- name: "meta"
+  description: "APIのメタデータ"
 - name: "device"
   description: "ユーザの端末"
 - name: "beacon"
@@ -16,6 +18,19 @@ tags:
 schemes:
 - "https"
 paths:
+  /:
+    get:
+      tags:
+      - "meta"
+      summary: "APIのメタデータを取得する"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/APIMeta"
   /device:
     post:
       tags:
@@ -43,7 +58,7 @@ paths:
     post:
       tags:
       - "beacon"
-      summary: "ビーコン検知の通知"
+      summary: "ビーコン検知を通知する"
       description: ""
       consumes:
       - "application/json"
@@ -63,7 +78,7 @@ paths:
     get:
       tags:
       - "phrase"
-      summary: "位置情報ベースのフレーズ候補の取得"
+      summary: "位置情報ベースのフレーズ候補を取得する"
       description: ""
       produces:
       - "application/json"
@@ -83,7 +98,7 @@ paths:
     get:
       tags:
       - "phrase"
-      summary: "頻出フレーズ候補の取得"
+      summary: "頻出のフレーズ候補を取得する"
       description: ""
       produces:
       - "application/json"
@@ -94,6 +109,15 @@ paths:
           schema:
             $ref: "#/definitions/Phrases"
 definitions:
+  APIMeta:
+    type: "object"
+    required:
+    - "api_version"
+    properties:
+      api_version:
+        type: "string"
+        format: "semver"
+        example: "1.0.0-alpha"
   Beacon:
     type: "object"
     required:
