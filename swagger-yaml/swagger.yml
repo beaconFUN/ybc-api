@@ -142,26 +142,40 @@ definitions:
   Phrases:
     type: "array"
     items:
-      $ref: "#/definitions/PhrasePair"
+      $ref: "#/definitions/Phrase"
     example:
-    - - lang: "en"
+    - id: "96ce2a83-a3a6-445a-98ea-50590a1675c8"
+      strings:
+      - lang: "en"
         string: "Could you take a photo?"
       - lang: "ja"
         string: "写真を撮ってもらえますか？"
-    - - lang: "en"
+    - id: "64518d78-85e4-49c7-9670-3fe6a1a31f1d"
+      strings:
+      - lang: "en"
         string: "How can I get to Hakodate station?"
       - lang: "ja"
         string: "函館駅にはどうすれば行けますか？"
-  PhrasePair:
-    type: "array"
-    items:
-      $ref: "#/definitions/Phrase"
-    example:
-    - lang: "en"
-      string: "Could you take a photo?"
-    - lang: "ja"
-      string: "写真を撮ってもらえますか？"
   Phrase:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+        description: "フレーズのID\nこのIDは1つ以上の言語で文字列に表現されたフレーズを識別する。"
+      strings:
+        type: "array"
+        description: "フレーズの文字列\n1つ以上の言語での表現が利用可能であることと、1つの言語での表現は1つであることのみが保証される。"
+        items:
+          $ref: "#/definitions/L10nString"
+    example:
+      id: "5c9b5f28-1cfb-4e3a-b77e-6cf8d2a35b68"
+      strings:
+      - lang: "en"
+        string: "Could you take a photo?"
+      - lang: "ja"
+        string: "写真を撮ってもらえますか？"
+  L10nString:
     type: "object"
     properties:
       lang:
