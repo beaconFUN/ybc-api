@@ -31,7 +31,7 @@ paths:
           description: "OK"
           schema:
             $ref: "#/definitions/APIMeta"
-  /device:
+  /device/:
     post:
       tags:
       - "device"
@@ -54,7 +54,7 @@ paths:
             $ref: "#/definitions/DeviceId"
         400:
           description: "Bad request. Invalid Parameters."
-  /beacon/passed:
+  /beacon/passed/:
     post:
       tags:
       - "beacon"
