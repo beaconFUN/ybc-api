@@ -142,7 +142,25 @@ definitions:
   Phrases:
     type: "array"
     items:
+      $ref: "#/definitions/PhrasePair"
+    example:
+    - - lang: "en"
+        string: "Could you take a photo?"
+      - lang: "ja"
+        string: "写真を撮ってもらえますか？"
+    - - lang: "en"
+        string: "How can I get to Hakodate station?"
+      - lang: "ja"
+        string: "函館駅にはどうすれば行けますか？"
+  PhrasePair:
+    type: "array"
+    items:
       $ref: "#/definitions/Phrase"
+    example:
+    - lang: "en"
+      string: "Could you take a photo?"
+    - lang: "ja"
+      string: "写真を撮ってもらえますか？"
   Phrase:
     type: "object"
     properties:
