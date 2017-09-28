@@ -74,6 +74,50 @@ paths:
           description: "OK"
         400:
           description: "Bad Request. Invalid Parameters."
+  /phrase/{phraseId}/:
+    get:
+      tags:
+      - "phrase"
+      summary: "フレーズの情報を取得する"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "phraseId"
+        in: "path"
+        description: "フレーズのID"
+        required: true
+        type: "string"
+        format: "uuid"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Phrase"
+        404:
+          description: "No such phrase found."
+  /phrase/{phraseId}/responses/:
+    get:
+      tags:
+      - "phrase"
+      summary: "応答のフレーズ候補を取得する"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "phraseId"
+        in: "path"
+        description: "フレーズのID"
+        required: true
+        type: "string"
+        format: "uuid"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Phrases"
+        404:
+          description: "No such phrase found."
   /phrase/suggestions/location/{deviceId}/:
     get:
       tags:
