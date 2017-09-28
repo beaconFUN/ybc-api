@@ -36,7 +36,7 @@ paths:
         200:
           description: "OK"
           schema:
-            $ref: "#/definitions/inline_response_200"
+            $ref: "#/definitions/DeviceId"
         400:
           description: "Bad request. Invalid Parameters."
   /beacon/passed:
@@ -59,27 +59,27 @@ paths:
           description: "OK"
         400:
           description: "Bad Request. Invalid Parameters."
-  /phrase/suggestion/?type=location:
+  /phrase/suggestions/location/{deviceId}/:
     get:
       tags:
       - "phrase"
       summary: "位置情報ベースのフレーズ候補の取得"
       description: ""
-      consumes:
-      - "application/json"
       produces:
       - "application/json"
       parameters:
       - name: "deviceId"
-        in: "query"
+        in: "path"
         description: "端末のID"
         required: true
+        type: "string"
+        format: "uuid"
       responses:
         200:
           description: "OK"
           schema:
             $ref: "#/definitions/Phrases"
-  /phrase/suggestion/?type=frequent:
+  /phrase/suggestions/frequent/:
     get:
       tags:
       - "phrase"
@@ -117,7 +117,7 @@ definitions:
   DeviceId:
     type: "string"
     format: "uuid"
-    description: "システムが自動的に割り当てる端末毎の固有値"
+    description: "端末ID\n\nシステムが自動的に割り当てる端末毎の固有値"
     example: "7967cad0-317d-4a97-af00-77cd3b964632"
   DeviceMeta:
     type: "object"
@@ -153,12 +153,6 @@ definitions:
       string:
         type: "string"
         example: "Could you take a photo?"
-  inline_response_200:
-    properties:
-      id:
-        type: "string"
-        format: "uuid"
-        description: "システムが自動的に割り当てた値"
   body:
     type: "object"
     properties:
