@@ -68,11 +68,11 @@ paths:
       - "application/json"
       parameters:
       - in: "body"
-        name: "body"
+        name: "BeaconPassed"
         description: "検知したビーコンの情報"
         required: true
         schema:
-          $ref: "#/definitions/body"
+          $ref: "#/definitions/BeaconPassed"
       responses:
         200:
           description: "OK"
@@ -262,7 +262,7 @@ definitions:
       string:
         type: "string"
         example: "Could you take a photo?"
-  body:
+  BeaconPassed:
     type: "object"
     properties:
       device:
