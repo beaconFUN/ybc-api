@@ -1,7 +1,11 @@
 ---
 swagger: "2.0"
 info:
-  description: "BeaconFUNプロジェクト「Youbeacomm」のAPIサーバです"
+  description: "BeaconFUNプロジェクト「Youbeacomm」のAPIサーバです\n\n利用可能なAPIのバージョンを確認するため、端末は他\
+    のAPIにアクセスする前に、`/`にアクセスする必要があります。また、新しい端末は`/device/`にアクセスして、端末IDの割り当てを受けることで、端末\
+    の利用者に対してパーソナライズされたコンテンツを利用することができるようになります。\n\n# 実装上の注意\nこのAPIを利用するすべてのクライアントアプ\
+    リケーションは、以下のことを前提に実装する必要があります。\n* Base URLが将来的に変更されること\n* エンドポイントが追加・廃止・分割・統合・変\
+    更されること\n* ただし、`/`は将来にわたって`available_api_versions`要素が含まれること"
   version: "1.0.0-alpha"
   title: "Youbeacomm API"
 host: "virtserver.swaggerhub.com"
@@ -156,12 +160,17 @@ definitions:
   APIMeta:
     type: "object"
     required:
-    - "api_version"
+    - "available_api_versions"
     properties:
-      api_version:
-        type: "string"
-        format: "semver"
-        example: "1.0.0-alpha"
+      available_api_versions:
+        type: "array"
+        example:
+        - "1.0.0-alpha"
+        - "1.0.0-alpha.2017092905"
+        - "1.0.0-alpha.2017103001"
+        items:
+          type: "string"
+          format: "semver"
   Beacon:
     type: "object"
     required:
