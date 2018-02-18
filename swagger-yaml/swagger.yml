@@ -20,7 +20,7 @@ tags:
 - name: "phrase"
   description: "フレーズ候補の提案"
 schemes:
-- "https"
+- "http"
 paths:
   /:
     get:
