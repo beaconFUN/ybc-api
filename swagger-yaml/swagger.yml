@@ -8,7 +8,7 @@ info:
     更されること\n* ただし、`/`は将来にわたって`available_api_versions`要素が含まれること"
   version: "1.0.0-alpha"
   title: "Youbeacomm API"
-host: "virtserver.swaggerhub.com"
+host: "beacon.fun.aigis.pw:8080"
 basePath: "/shield-9/Youbeacomm/1.0.0-alpha"
 tags:
 - name: "meta"
